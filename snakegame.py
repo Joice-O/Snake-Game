@@ -2,15 +2,15 @@ import pygame  # biblioteca para desenvolvimento de jogos
 from pygame.locals import *
 import random
 
-WINDOW_SIZE = (500, 400)
-PIXEL_SIZE = 10
-BORDER_SIZE = 10  # Tamanho da borda
+WINDOW_SIZE = (500, 400) #tamanho da janela
+PIXEL_SIZE = 10 #tamanho do pixel
+BORDER_SIZE = 10  #tamanho da borda
 
 # Função da colisão com o próprio corpo
 def collision(pos1, pos2):
     return pos1 == pos2
 
-# Função para verificar colisão com a borda
+# Função da colisão com a borda
 def hit_border(pos):
     x, y = pos
     if x < BORDER_SIZE or x >= WINDOW_SIZE[0] - BORDER_SIZE or y < BORDER_SIZE or y >= WINDOW_SIZE[1] - BORDER_SIZE:
@@ -21,10 +21,10 @@ def hit_border(pos):
 def random_color():
     while True:
         color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-        if sum(color) > 100:  # Evita cores muito escuras (preto/cinza)
+        if sum(color) > 100:  # Evitar cores escuras
             return color
 
-# Atualiza a posição da maçã garantindo que ela não apareça na borda
+# Função para gerar posição aletatória para maça sem deixar ser na borda
 def random_on_grid():
     while True:
         x = random.randint(BORDER_SIZE // PIXEL_SIZE, (WINDOW_SIZE[0] - BORDER_SIZE) // PIXEL_SIZE - 1) * PIXEL_SIZE
@@ -35,12 +35,12 @@ pygame.init()
 screen = pygame.display.set_mode(WINDOW_SIZE)
 pygame.display.set_caption('Snake Game')
 
-# Inicialização da cobrinha
+# Inicialização da cobrinha com tamanho 3
 snake_pos = [(250, 50), (260, 50), (270, 50)]
 snake_surface = pygame.Surface((PIXEL_SIZE, PIXEL_SIZE))
 snake_surface.fill((0, 206, 209))
 snake_direction = K_LEFT
-next_direction = K_LEFT  # Para evitar mudanças instantâneas erradas
+next_direction = K_LEFT  
 
 # Inicialização da maçã
 apple_surface = pygame.Surface((PIXEL_SIZE, PIXEL_SIZE))
@@ -87,7 +87,7 @@ def handle_game_over():
             elif event.type == KEYDOWN:
                 if event.key == K_r:  # Reiniciar o jogo
                     restart_game()
-                    return True  # Retorna para o loop principal
+                    return True  
                 elif event.key == K_q:  # Sair do jogo
                     pygame.quit()
                     quit()
@@ -105,7 +105,6 @@ def pause_game():
     screen.blit(quit_text, (170, 200))
     pygame.display.update()
 
-    # Espera a tecla 'P' para continuar ou 'Q' para sair
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -122,13 +121,13 @@ while True:
     pygame.time.Clock().tick(13)
     screen.fill((0, 0, 0))
 
-    # Desenhando a borda
+    # Desenho das bordas
     pygame.draw.rect(screen, (50, 50, 50), (0, 0, WINDOW_SIZE[0], BORDER_SIZE))  # Topo
     pygame.draw.rect(screen, (50, 50, 50), (0, 0, BORDER_SIZE, WINDOW_SIZE[1]))  # Esquerda
     pygame.draw.rect(screen, (50, 50, 50), (0, WINDOW_SIZE[1] - BORDER_SIZE, WINDOW_SIZE[0], BORDER_SIZE))  # Base
     pygame.draw.rect(screen, (50, 50, 50), (WINDOW_SIZE[0] - BORDER_SIZE, 0, BORDER_SIZE, WINDOW_SIZE[1]))  # Direita
 
-    # Verificando eventos do teclado
+    # Verifica os eventos do teclado/os botões
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
@@ -145,21 +144,21 @@ while True:
             elif event.key == K_p:  # Pausar o jogo
                 pause_game()  # Chama a função de pausa
 
-    # Atualizando a direção
+    # Atualiza a direção
     snake_direction = next_direction
 
-    # Exibindo a maçã
+    # Exibe a maçã
     pygame.draw.circle(screen, apple_color, (apple_pos[0] + PIXEL_SIZE // 2, apple_pos[1] + PIXEL_SIZE // 2), PIXEL_SIZE // 2)
 
-    # Verificando colisão com a maçã
+    # Verifica a colisão com a maçã
     if collision(apple_pos, snake_pos[0]):
-        snake_pos.append(snake_pos[-1])  # Cresce ao comer a maçã
+        snake_pos.append(snake_pos[-1])  # Adiciona mais um pixel ao corpo da cobra
         apple_pos = random_on_grid()
         apple_color = random_color()
         apple_surface.fill(apple_color)
         score += 1
 
-    # Atualizando a posição do corpo da cobrinha
+    # Atualiza a posição do corpo da cobrinha
     for i in range(len(snake_pos) - 1, 0, -1):
         if collision(snake_pos[0], snake_pos[i]):
             game_over()  # Exibe tela de Game Over
@@ -167,7 +166,7 @@ while True:
                 break  # Sai do loop atual e reinicia o jogo
         snake_pos[i] = snake_pos[i - 1]
 
-    # Movendo a cabeça da cobrinha
+    # Movimenta a cabeça da cobrinha
     head_x, head_y = snake_pos[0]
     if snake_direction == K_UP:
         snake_pos[0] = (head_x, head_y - PIXEL_SIZE)
@@ -178,7 +177,7 @@ while True:
     elif snake_direction == K_RIGHT:
         snake_pos[0] = (head_x + PIXEL_SIZE, head_y)
 
-    # Verificando colisão com a borda
+    # Verifica colisão com a borda
     if hit_border(snake_pos[0]):
         game_over()  # Exibe tela de Game Over
         if handle_game_over():  # Aguarda a decisão do jogador
@@ -186,11 +185,11 @@ while True:
         else:
             break  # Sai do loop principal se o jogador escolher sair
 
-    # Exibindo a cobrinha
+    # Exibe a cobrinha
     for pos in snake_pos:
         screen.blit(snake_surface, pos)
 
-    # Exibindo a pontuação dentro da borda
+    # Exibe a pontuação dentro da borda
     score_text = font.render(f'Pontuação: {score}', True, (255, 255, 255))  
     screen.blit(score_text, (15, 10))
 
