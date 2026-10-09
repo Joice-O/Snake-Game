@@ -1,22 +1,63 @@
-🐍 Snake Game com Pygame
-O Snake Game é o clássico jogo da cobrinha desenvolvido em Python usando a biblioteca Pygame. O objetivo é controlar a cobrinha para coletar maçãs, aumentando seu tamanho e pontuação a cada fruta consumida. O jogo continua até que a cobrinha colida com a borda ou com seu próprio corpo.
+# Snake Game
 
-🚀 Requisitos
-Para jogar, você precisa ter instalado:
-Python
-Pygame (pip install pygame)
-Uma IDE ou terminal para executar o código
+Jogo da cobrinha desenvolvido em Python com Pygame. O objetivo é coletar maçãs, aumentar a pontuação e evitar colisões com as bordas ou com o próprio corpo.
 
-🎮 Controles
-Setas do teclado → Movimentam a cobrinha
-P → Pausar e retomar o jogo
-R → Reiniciar após Game Over
-Q → Sair do jogo na tela de pausa ou Game Over
+## Funcionalidades
 
-📜 Regras
-A cobrinha cresce ao comer maçãs, e a pontuação aumenta +1 a cada fruta coletada.
-O jogo termina caso a cobrinha colida com a borda ou com seu próprio corpo.
-Após o Game Over, a pontuação final será exibida, e você pode:
-Pressionar R para reiniciar o jogo
-Pressionar Q para sair
-O jogo pode ser pausado a qualquer momento pressionando P.
+- Movimentação pelas setas do teclado.
+- Crescimento da cobra e acréscimo de um ponto por maçã.
+- Pausa e retomada da partida.
+- Tela de fim de jogo com pontuação e opção de reiniciar.
+
+## Tecnologias
+
+Python 3, Pygame e o módulo `random` da biblioteca padrão.
+
+## Como executar
+
+É necessário ter Python 3 instalado e um ambiente com interface gráfica.
+
+```bash
+git clone https://github.com/Joice-O/Snake-Game.git
+cd Snake-Game
+python -m venv .venv
+```
+
+Ative o ambiente virtual:
+
+- Windows (PowerShell): `.\.venv\Scripts\Activate.ps1`
+- Linux/macOS: `source .venv/bin/activate`
+
+Instale a dependência e inicie o jogo:
+
+```bash
+python -m pip install pygame
+python snakegame.py
+```
+
+Se o comando Python do seu sistema for `python3`, utilize-o no lugar de `python`. Não são necessários banco de dados ou arquivos de imagem externos.
+
+## Controles
+
+| Tecla | Ação |
+| --- | --- |
+| Setas | Mover a cobra |
+| P | Pausar ou retomar |
+| R | Reiniciar na tela de fim de jogo |
+| Q | Sair durante a pausa ou na tela de fim de jogo |
+
+Também é possível sair fechando a janela.
+
+## Organização
+
+- `snakegame.py`: lógica, interface, controles, pontuação e colisões.
+- `README.md`: apresentação e instruções de execução.
+
+## Autoria
+
+Projeto disponível no perfil de [Joice Oliveira Jardim](https://github.com/Joice-O). O histórico de commits registra as contribuições ao código.
+
+## Limitações atuais
+
+A pontuação é mantida apenas durante a execução; não há ranking persistente. O projeto não possui suíte de testes automatizados.
+
